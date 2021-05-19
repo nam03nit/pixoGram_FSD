@@ -12,19 +12,21 @@ public class Media {
 	private int id;
 	private String title;
 	private String description;
-	private String imageName;
-	private String email;
+	private String tags;
+	private String effects;
+	private String imagePath;
 	
 	
 	
 	//Constructor using fields
-	public Media(int id, String title, String description, String imageName, String email) {
+	public Media(int id, String title, String description, String tags, String effects,String imagePath) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.imageName = imageName;
-		this.email = email;
+		this.tags = tags;
+		this.effects = effects;
+		this.imagePath = imagePath;
 	}
 
 	//Default Constructor 
@@ -63,28 +65,35 @@ public class Media {
 		this.description = description;
 	}
 
-	public String getImageName() {
-		return imageName;
+	public String getTags() {
+		return tags;
 	}
 
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEffects() {
+		return effects;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEffects(String effects) {
+		this.effects = effects;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	//ToString
 	@Override
 	public String toString() {
-		return "Media [id=" + id + ", title=" + title + ", description=" + description + ", imageName=" + imageName
-				+ ", email=" + email + "]";
+		return "Media [id=" + id + ", title=" + title + ", description=" + description + ", tags=" + tags
+				+ ", effects=" + effects + ", imagePath=" + imagePath + "]";
 	}
-	
 	
 }

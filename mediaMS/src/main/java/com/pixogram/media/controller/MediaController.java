@@ -28,27 +28,28 @@ public class MediaController {
 	@Autowired
 	private MediaService mediaService;
 	
-	//Get all users
+	//Get all media
 	@GetMapping("media/{mediaId}")
 	public Media getUsers(@PathVariable int mediaId) {
 		return this.mediaService.getMedia(mediaId);
 	}
 	
-	//Get one user
+	//Get one media
 	@GetMapping("media")
 	public List<Media> getMedia() {
 		return this.mediaService.getMedias();
 	}
 	
-	//Create a user
-	@PostMapping("media/add/") 
-	public Media createMedia(@RequestBody Media media,
+	//Create a media
+	@PostMapping("media/add")
+	public Media createMedia(@RequestParam("title") String title,
+			@RequestParam("description") String description,
+			@RequestParam("tags") String tags,
+			@RequestParam("effects") String effects,
 			@RequestParam("image") MultipartFile multipartFile) throws IOException { 
-		
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); 
-		return this.mediaService.createMedia(media);
+		return this.mediaService.createMedia(multipartFile,title,description,
+				 tags,effects);
 	}
-	
 	//Update a user
 	@DeleteMapping("media/update") 
 	public Media updateMedia(@RequestBody Media media) {

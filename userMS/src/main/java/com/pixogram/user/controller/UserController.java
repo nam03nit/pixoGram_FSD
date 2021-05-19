@@ -50,7 +50,14 @@ public class UserController {
 	
 	//Create a user
 	@PostMapping("users/add") 
-	public User createUser(@RequestBody User user) {
+	public User createUser(@RequestBody User user) throws Exception {
+		String userName = user.getUserName();
+		if(userName!=null && "".equals(userName)) {
+			User userObj = userservice.getUserByUsername(userName);
+			if(userObj != null) {
+				throw new Exception("user with userName"+userName+"is already present");
+			}
+		}
 		return this.userservice.createUser(user);
 	}
 	
@@ -72,6 +79,8 @@ public class UserController {
 	public User deleteUser(@RequestBody User user) {
 		return this.userservice.deleteUser(user);
 	}
+	
+
 	
 	
 	
