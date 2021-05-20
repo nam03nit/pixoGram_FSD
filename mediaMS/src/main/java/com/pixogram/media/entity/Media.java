@@ -15,11 +15,12 @@ public class Media {
 	private String tags;
 	private String effects;
 	private String imagePath;
+	private int userId;
 	
 	
 	
 	//Constructor using fields
-	public Media(int id, String title, String description, String tags, String effects,String imagePath) {
+	public Media(int id, String title, String description, String tags, String effects,String imagePath,int userId) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -27,6 +28,7 @@ public class Media {
 		this.tags = tags;
 		this.effects = effects;
 		this.imagePath = imagePath;
+		this.userId = userId;
 	}
 
 	//Default Constructor 
@@ -88,12 +90,23 @@ public class Media {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	//ToString
 	@Override
 	public String toString() {
-		return "Media [id=" + id + ", title=" + title + ", description=" + description + ", tags=" + tags
-				+ ", effects=" + effects + ", imagePath=" + imagePath + "]";
+		return "Media [id=" + id + ", title=" + title + ", description=" + description + ", tags=" + tags + ", effects="
+				+ effects + ", imagePath=" + imagePath + ", userId=" + userId + "]";
 	}
+
+	
+	
 	
 }

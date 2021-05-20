@@ -40,7 +40,7 @@ public class MediaServiceImpl implements MediaService {
 	
 	@Override
 	public Media createMedia(MultipartFile multipartFile,String title,String description,
-			String tags,String effects) {
+			String tags,String effects, int userId) {
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		
 		Media media = new Media();		
@@ -74,5 +74,12 @@ public class MediaServiceImpl implements MediaService {
 		mediaRepository.delete(media);
 		mediaRepository.save(media);
 		return media;
+	}
+
+
+	@Override
+	public List<Media> getMediasByUserId(int userId) {
+		List<Media> medias = mediaRepository.findByUserId(userId);
+		return medias;
 	}
 }

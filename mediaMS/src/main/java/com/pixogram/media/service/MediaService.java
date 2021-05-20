@@ -14,5 +14,7 @@ public interface MediaService {
 	public Media updateMedia(Media media);
 	public Media deleteMedia(Media media);
 	public Media createMedia(MultipartFile multipartFile, String title, String description, String tags,
-			String effects);
+			String effects, int userId);
+	public List<Media> getMediasByUserId(int userId);
+	
 }

@@ -1,10 +1,10 @@
 package com.pixogram.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.pixogram.user.dto.Media;
 import com.pixogram.user.entity.User;
+import com.pixogram.user.feign.MyFeignClient;
 import com.pixogram.user.service.UserService;
 
 
@@ -29,6 +32,8 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
+	@Autowired
+	private MyFeignClient feignClient;
 	
 	//Get one users
 	@GetMapping("users/{userId}")
@@ -80,9 +85,34 @@ public class UserController {
 		return this.userservice.deleteUser(user);
 	}
 	
-
+	@HystrixCommand(fallbackMethod="defaultMedia")
+	@GetMapping("/users/media/{userId}")
+	public List<Media> getMedias(@PathVariable int userId) {
+		return feignClient.getMediasByUserId(userId);
+	}
 	
+	public List<Media> defaultMedia(int id) {
+		List<Media> mediaObj = new ArrayList<Media>();
+		return mediaObj;
+	}
 	
+	@HystrixCommand(fallbackMethod="createFailed")
+	@PostMapping("media/add")
+	public Media createMedia(@RequestParam("title") String title,
+			@RequestParam("description") String description,
+			@RequestParam("tags") String tags,
+			@RequestParam("effects") String effects,
+			@RequestParam("userId") int userId,
+			@RequestParam("image") MultipartFile multipartFile) throws IOException { 
+		return this.feignClient.createMediaForUser(title,description,
+				 tags,effects,userId,multipartFile);
+	}	
+	
+	public Media createFailed(String title,String description,String tags,
+			String effects,int userId,MultipartFile multipartFile) {
+		Media mediaObj = new Media();
+		return mediaObj;
+	}
 	
 
 }

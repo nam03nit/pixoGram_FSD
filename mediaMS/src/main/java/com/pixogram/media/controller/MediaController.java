@@ -28,16 +28,22 @@ public class MediaController {
 	@Autowired
 	private MediaService mediaService;
 	
-	//Get all media
-	@GetMapping("media/{mediaId}")
-	public Media getUsers(@PathVariable int mediaId) {
-		return this.mediaService.getMedia(mediaId);
-	}
-	
 	//Get one media
-	@GetMapping("media")
-	public List<Media> getMedia() {
-		return this.mediaService.getMedias();
+//	@GetMapping("media/{mediaId}")
+//	public Media getMedia(@PathVariable int mediaId) {
+//		return this.mediaService.getMedia(mediaId);
+//	}
+	
+	//Get all media
+//	@GetMapping("media/")
+//	public List<Media> getMedias() {
+//		return this.mediaService.getMedias();
+//	}
+	
+	//Get media by userId
+	@GetMapping("users/media/{userId}")
+	public List<Media> getMediasByUserId(@PathVariable int userId) {
+		return this.mediaService.getMediasByUserId(userId);
 	}
 	
 	//Create a media
@@ -46,9 +52,10 @@ public class MediaController {
 			@RequestParam("description") String description,
 			@RequestParam("tags") String tags,
 			@RequestParam("effects") String effects,
+			@RequestParam("userId") int userId,
 			@RequestParam("image") MultipartFile multipartFile) throws IOException { 
 		return this.mediaService.createMedia(multipartFile,title,description,
-				 tags,effects);
+				 tags,effects,userId);
 	}
 	//Update a user
 	@DeleteMapping("media/update") 
