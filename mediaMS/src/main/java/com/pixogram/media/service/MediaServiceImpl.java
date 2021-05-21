@@ -39,8 +39,8 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public Media createMedia(MultipartFile multipartFile,String title,String description,
-			String tags,String effects, int userId) {
+	public Media createMedia(String title,String description,
+			String tags,String effects, int userId,MultipartFile multipartFile) {
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		
 		Media media = new Media();		

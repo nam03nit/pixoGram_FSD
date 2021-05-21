@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,23 +97,23 @@ public class UserController {
 		return mediaObj;
 	}
 	
-	@HystrixCommand(fallbackMethod="createFailed")
+	//@HystrixCommand(fallbackMethod="createFailed")
 	@PostMapping("media/add")
 	public Media createMedia(@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("tags") String tags,
 			@RequestParam("effects") String effects,
 			@RequestParam("userId") int userId,
-			@RequestParam("image") MultipartFile multipartFile) throws IOException { 
-		return this.feignClient.createMediaForUser(title,description,
+			@RequestPart("image") MultipartFile multipartFile) { 
+		return this.feignClient.createMedia(title,description,
 				 tags,effects,userId,multipartFile);
 	}	
 	
-	public Media createFailed(String title,String description,String tags,
-			String effects,int userId,MultipartFile multipartFile) {
-		Media mediaObj = new Media();
-		return mediaObj;
-	}
+//	public Media createFailed(String title,String description,String tags,
+//			String effects,int userId,MultipartFile multipartFile) {
+//		Media mediaObj = new Media();
+//		return mediaObj;
+//	}
 	
 
 }

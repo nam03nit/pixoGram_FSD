@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,15 +49,15 @@ public class MediaController {
 	}
 	
 	//Create a media
-	@PostMapping("media/add")
+	@PostMapping(path="media/add")                         
 	public Media createMedia(@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("tags") String tags,
 			@RequestParam("effects") String effects,
 			@RequestParam("userId") int userId,
 			@RequestParam("image") MultipartFile multipartFile) throws IOException { 
-		return this.mediaService.createMedia(multipartFile,title,description,
-				 tags,effects,userId);
+		return this.mediaService.createMedia(title,description,
+				 tags,effects,userId,multipartFile);
 	}
 	//Update a user
 	@DeleteMapping("media/update") 
